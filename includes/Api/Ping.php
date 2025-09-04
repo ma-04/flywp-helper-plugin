@@ -19,7 +19,7 @@ class Ping {
     public function handle_ping() {
         $response = [
             'message'        => 'pong',
-            'wp_version'     => get_bloginfo( 'version' ),
+            'wp_version'     => FLYWP_WP_VERSION,
             'php_version'    => PHP_VERSION,
             'plugin_version' => FLYWP_VERSION,
         ];

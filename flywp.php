@@ -63,6 +63,21 @@ final class FlyWP_Plugin {
      */
     private function define_constants() {
         define( 'FLYWP_VERSION', $this->version );
+        // Define FLYWP_WP_VERSION using the include_version.php method
+        if ( ! defined( 'FLYWP_WP_VERSION' ) ) {
+            $wp_version = null;
+            $version_file = ABSPATH . 'wp-includes/version.php';
+            if ( is_file( $version_file ) ) {
+                // Isolated scope include
+                $get_version = static function( $file ) {
+                    $wp_version = null;
+                    include $file;
+                    return $wp_version ?? ( isset( $GLOBALS['wp_version'] ) ? $GLOBALS['wp_version'] : null );
+                };
+                $wp_version = $get_version( $version_file );
+            }
+            define( 'FLYWP_WP_VERSION', $wp_version );
+        }
         define( 'FLYWP_PLUGIN_FILE', __FILE__ );
         define( 'FLYWP_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
         define( 'FLYWP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );

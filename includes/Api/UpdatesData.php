@@ -54,7 +54,7 @@ class UpdatesData {
      */
     private function get_updates_data(): array {
         return [
-            'wp_version' => get_bloginfo( 'version' ),
+            'wp_version' => FLYWP_WP_VERSION,
             'updates'    => $this->get_formatted_updates_data(),
         ];
     }
